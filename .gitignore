@@ -1,0 +1,8 @@
+.history/
+.idea/
+.vscode/
+.env/
+
+__pycache__/
+*.pyc
+

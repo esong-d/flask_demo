@@ -1,0 +1,6 @@
+Flask==3.0.3
+gunicorn==23.0.0
+
+
+
+Start-Process -Wait -FilePath "Docker Desktop Installer (1).exe" -ArgumentList "install", "--accept-license", "--installation-dir=D:\software\Docker", "--wsl-default-data-root=D:\software\Docker\data", "--windows-containers-default-data-root=D:\software\Docker"
