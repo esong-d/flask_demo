@@ -1,49 +1,43 @@
-from typing import Any
-from flask import make_response
+from flask import json
+from flask import Response
 
 
-def Success(code: int = 200, msg: str = '', data: dict = None, sucess: str = 'true') -> dict[str, Any]:
-    return make_response({
-        'code': code,
-        'msg': msg,
-        'data': data,
-        'success': sucess
-    }, code)
+class BaseResponse(Response):
+    default_mimetype = 'application/json'
+
+    def __init__(self, code: int, success: bool, msg: str, data: dict = None):
+        _dict = {
+            'code': code,
+            'success': success,
+            'msg': msg,
+            'data': data
+        }
+        super().__init__(json.dumps(_dict), status=code)
 
 
-def Fail(code: int = 400, msg: str = '', data: dict = None, success: str = 'false') -> dict[str, Any]:
-    return make_response({
-        'code': code,
-        'msg': msg,
-        'data': data,
-        'success': success
-    }, code)
+class Success(BaseResponse):
+    def __init__(self, code: int = 200, msg: str = '', data: dict = None, success: str = 'true') -> None:
+        super().__init__(code=code, msg=msg, data=data, success=success)
 
 
-def Error(code: int = 500, msg: str = '', data: dict = None, success: str = 'false') -> dict[str, Any]:
-    return make_response({
-        'code': code,
-        'msg': msg,
-        'data': data,
-        'success': success
-    }, code)
+class Fail(BaseResponse):
+    def __init__(self, code: int = 400, msg: str = '', data: dict = None, success: str = 'false') -> None:
+        super().__init__(code=code, msg=msg, data=data, success=success)
 
 
-def Unauthorized(code: int = 401, msg: str = '', data: dict = None, success: str = 'false') -> dict[str, Any]:
-    return make_response({
-        'code': code,
-        'msg': msg,
-        'data': data,
-        'success': success
-    }, code)
+class Error(BaseResponse):
+    def __init__(self, code: int = 500, msg: str = '', data: dict = None, success: str = 'false') -> None:
+        super().__init__(code=code, msg=msg, data=data, success=success)
 
 
-def Forbidden(code: int = 403, msg: str = '', data: dict = None, success: str = 'false') -> dict[str, Any]:
-    return make_response({
-        'code': code,
-        'msg': msg,
-        'data': data,
-        'success': success
-    }, code)
+class Unauthorized(BaseResponse):
+    def __init__(self, code: int = 401, msg: str = '', data: dict = None, success: str = 'false') -> None:
+        super().__init__(code=code, msg=msg, data=data, success=success)
+
+
+class Forbidden(BaseResponse):
+    def __init__(self, code: int = 403, msg: str = '', data: dict = None, success: str = 'false') -> None:
+        super().__init__(code=code, msg=msg, data=data, success=success)
+
 
 
